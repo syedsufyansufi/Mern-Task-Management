@@ -4,6 +4,8 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import { connectDB } from "../src/config/db.js";
+
 dotenv.config();
 
 const app = express();
@@ -20,11 +22,14 @@ app.get("/ping", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  res.json({ status: "Ok", time: "<current time>" });
+  res.json({ status: "ok", time: new Date().toISOString() });
 });
 
 // ----- Start Server -----
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
 });
