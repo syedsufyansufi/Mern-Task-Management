@@ -1,35 +1,29 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import helmet from "helmet";
 import morgan from "morgan";
-
-import { connectDB } from "../src/config/db.js";
+import connectDB from "./config/db.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
 dotenv.config();
-
 const app = express();
 
-// ----- Middleware -----
-app.use(express.json()); // parse JSON request body
-app.use(cors()); // allow frontend requests
-app.use(helmet()); // security best practices
-app.use(morgan("dev")); // log HTTP requests in console
+// Middleware
+app.use(express.json()); // parse JSON body
+app.use(cors()); // allow frontend to call backend
+app.use(morgan("dev")); // logs HTTP requests
 
-// ----- Routes -----
-app.get("/ping", (req, res) => {
-  res.json({ message: "pong 🏓" });
-});
+// Test route
+app.get("/", (req, res) => res.send("✅ API is running..."));
 
-app.get("/health", (req, res) => {
-  res.json({ status: "ok", time: new Date().toISOString() });
-});
+// Task routes
+app.use("/tasks", taskRoutes);
 
-// ----- Start Server -----
 const PORT = process.env.PORT || 5000;
 
+// Start server only after DB connects
 connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-  });
+  app.listen(PORT, () =>
+    console.log(`🚀 Server running on http://localhost:${PORT}`)
+  );
 });
