@@ -5,7 +5,7 @@ import TaskForm from "../components/TaskFrom";
 
 // API Base URL - Vite uses import.meta.env instead of process.env
 const API_BASE_URL = import.meta.env.PROD
-  ? 'https://your-deployed-backend-url.com/api' // Replace with your deployed backend URL
+  ? 'https://mern-task-management-vkh2.onrender.com/api' 
   : 'http://localhost:5000/api';
 
 const TaskPage = () => {
