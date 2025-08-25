@@ -1,36 +1,31 @@
 import axios from "axios";
 import { useState } from "react";
 
-// API Base URL - Vite uses import.meta.env instead of process.env
-const API_BASE_URL = import.meta.env.PROD
-  ? 'https://your-deployed-backend-url.com/api' // Replace with your deployed backend URL
-  : 'http://localhost:5000/api';
-
-const TaskForm = ({ onTaskAdded }) => {
+const TaskForm = ({ onTaskAdded, apiBaseUrl }) => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim()) return; // Prevent empty tasks
+    if (!title.trim()) return;
 
     try {
       setLoading(true);
-      const response = await axios.post(`${API_BASE_URL}/tasks`, { // Updated endpoint
+      const response = await axios.post(`${apiBaseUrl}/tasks`, {
         title: title.trim(),
         completed: false,
       });
 
-      console.log("Task created:", response.data);
+      console.log("✅ Task created:", response.data);
 
       if (onTaskAdded) {
-        onTaskAdded(response.data); // ✅ send new task back to parent
+        onTaskAdded(response.data);
       }
 
-      setTitle(""); // Clear input after submission
+      setTitle("");
     } catch (error) {
-      console.error("Error creating task:", error);
-      alert('Failed to create task');
+      console.error("❌ Error creating task:", error.response?.data || error.message);
+      alert("Failed to create task");
     } finally {
       setLoading(false);
     }
