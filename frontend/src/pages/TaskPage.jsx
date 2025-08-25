@@ -69,7 +69,7 @@ const TaskPage = () => {
               className="p-3 bg-gray-100 rounded-md flex justify-between items-center"
             >
               <span>
-                {task.title} {task.completed ? "✅" : "❌"}
+                {task.title} {task.completed ? "(Completed)" : ""}
               </span>
               <button
                 onClick={() => handleTaskDelete(task._id)}
