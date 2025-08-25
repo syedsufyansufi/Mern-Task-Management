@@ -21,5 +21,5 @@ Features include user authentication (JWT), task creation, updating, and deletio
 ## 📂 Setup Locally  
 1. Clone the repo  
    ```bash
-   git clone https://github.com/yourusername/mern-task-management.git
+   git clone https://github.com/syedsufyansufi/mern-task-management.git
    cd mern-task-management
