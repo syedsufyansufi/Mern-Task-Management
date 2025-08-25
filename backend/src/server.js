@@ -24,17 +24,10 @@ const allowedOrigins = [
 
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-})); // allow frontend to call backend
+origin: ["https://mern-task-management-ochre.vercel.app"],
+methods: ["GET", "POST", "PUT", "DELETE"],
+credentials: true,
+}));
 app.use(morgan("combined")); // logs HTTP requests
 
 
