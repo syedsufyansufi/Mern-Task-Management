@@ -41,18 +41,6 @@ app.use(morgan("combined")); // logs HTTP requests
 // Task routes
 app.use("/api/tasks", taskRoutes);
 
-// Serve static files from React build (for single deployment)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/build")));
-  
-  // Handle React routing, return all requests to React app
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
-  });
-} else {
-  // Development route
-  app.get("/", (req, res) => res.send("✅ API is running in development mode..."));
-}
 
 const PORT = process.env.PORT || 5000;
 
